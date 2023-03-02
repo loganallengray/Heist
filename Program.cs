@@ -8,9 +8,12 @@ namespace heist
         static void Main(string[] args)
         {
 
+            int bankDifficultyLevel = 100;
 
             List<Member> team = new List<Member>();
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Plan Your Heist!");
+            Console.ResetColor();
 
             string memberName = "";
             do
@@ -35,11 +38,30 @@ namespace heist
             }
             while (memberName.Length > 0);
 
-            Console.WriteLine($"Number of members: {team.Count}");
+            int teamSkillLevel = 0;
             foreach (Member member in team)
             {
-                Console.WriteLine($"{member.Name} has a skill level of {member.SkillLevel}, and a courage factor of {member.CourageFactor}.");
+                teamSkillLevel += member.SkillLevel;
             }
+
+            if (teamSkillLevel >= bankDifficultyLevel)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkBlue;
+                Console.WriteLine($"You have done it!");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"You are going to jail!!!");
+                Console.ResetColor();
+            }
+
+            //Console.WriteLine($"Number of members: {team.Count}");
+            // foreach (Member member in team)
+            // {
+            //     Console.WriteLine($"{member.Name} has a skill level of {member.SkillLevel}, and a courage factor of {member.CourageFactor}.");
+            // }
         }
     }
 }
