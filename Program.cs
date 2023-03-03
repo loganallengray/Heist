@@ -7,13 +7,16 @@ namespace heist
     {
         static void Main(string[] args)
         {
+            /*Create a random number between -10 and 10 for the heist's luck value.
+            1 Add this number to the bank's difficulty level.
+            2 Before displaying the success or failure message, display a report that shows.
+             The team's combined skill level
+            4 The bank's difficulty level*/
 
             int bankDifficultyLevel = 100;
 
-            List<Member> team = new List<Member>();
-            Console.ForegroundColor = ConsoleColor.Green;
+            List<Member> Team = new List<Member>();
             Console.WriteLine("Plan Your Heist!");
-            Console.ResetColor();
 
             string memberName = "";
             do
@@ -25,42 +28,56 @@ namespace heist
                     break;
                 }
 
-                Console.WriteLine("Crew Member Skill Level:");
+
+                Console.WriteLine("Crew Member skill level:");
                 string memberSkillLevelString = Console.ReadLine();
                 int.TryParse(memberSkillLevelString, out int memberSkillLevel);
 
-                Console.WriteLine("Crew Member Courage Factor:");
+                Console.WriteLine("Crew Member courage factor:");
                 string memberCourageFactorString = Console.ReadLine();
                 double.TryParse(memberCourageFactorString, out double memberCourageFactor);
 
                 Member newMember = new Member(memberName, memberSkillLevel, memberCourageFactor);
-                team.Add(newMember);
+                Team.Add(newMember);
+                Console.WriteLine();
             }
             while (memberName.Length > 0);
 
             int teamSkillLevel = 0;
-            foreach (Member member in team)
+
+            foreach (Member member in Team)
             {
                 teamSkillLevel += member.SkillLevel;
             }
 
-            if (teamSkillLevel >= bankDifficultyLevel)
+            Console.WriteLine("How many trials do you want to run?:");
+            string trialChoiceString = Console.ReadLine();
+            int.TryParse(trialChoiceString, out int trialChoice);
+
+            for (int i = 0; i < trialChoice; i++)
             {
-                Console.ForegroundColor = ConsoleColor.DarkBlue;
-                Console.WriteLine($"You have done it!");
-                Console.ResetColor();
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"You are going to jail!!!");
-                Console.ResetColor();
+                int LuckValue = new Random().Next(-10, 11);
+                bankDifficultyLevel += LuckValue;
+
+                Console.WriteLine($"total skill level of team :{teamSkillLevel} and bank's difficulty level is {bankDifficultyLevel}");
+
+                if (teamSkillLevel >= bankDifficultyLevel)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.WriteLine($"you did it");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"straight to jail");
+                    Console.ResetColor();
+                }
             }
 
-            //Console.WriteLine($"Number of members: {team.Count}");
-            // foreach (Member member in team)
+            // foreach (Member member in Team)
             // {
-            //     Console.WriteLine($"{member.Name} has a skill level of {member.SkillLevel}, and a courage factor of {member.CourageFactor}.");
+            // Console.WriteLine($"{member.Name} has a skill level of {member.SkillLevel} and a courage factor of {member.CourageFactor}.");
             // }
         }
     }

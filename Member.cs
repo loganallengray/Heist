@@ -2,7 +2,7 @@ using System;
 
 namespace heist
 {
-    class Member
+    public class Member
     {
         public string Name { get; }
 
