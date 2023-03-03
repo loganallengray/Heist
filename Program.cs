@@ -7,16 +7,15 @@ namespace heist
     {
         static void Main(string[] args)
         {
-            /*Create a random number between -10 and 10 for the heist's luck value.
-            1 Add this number to the bank's difficulty level.
-            2 Before displaying the success or failure message, display a report that shows.
-             The team's combined skill level
-            4 The bank's difficulty level*/
-
-            int bankDifficultyLevel = 100;
 
             List<Member> Team = new List<Member>();
             Console.WriteLine("Plan Your Heist!");
+            Console.WriteLine();
+
+            Console.WriteLine("Please select a difficulty level:");
+            string bankDifficultyLevelString = Console.ReadLine();
+            int.TryParse(bankDifficultyLevelString, out int userBankDifficultyLevel);
+            Console.WriteLine();
 
             string memberName = "";
             do
@@ -54,31 +53,38 @@ namespace heist
             string trialChoiceString = Console.ReadLine();
             int.TryParse(trialChoiceString, out int trialChoice);
 
+            int successfulTrials = 0;
+            int failedTrials = 0;
+
+            Console.WriteLine($"Total Skill Level Of Team :{teamSkillLevel}");
+
             for (int i = 0; i < trialChoice; i++)
             {
+                int bankDifficultyLevel = userBankDifficultyLevel;
                 int LuckValue = new Random().Next(-10, 11);
                 bankDifficultyLevel += LuckValue;
 
-                Console.WriteLine($"total skill level of team :{teamSkillLevel} and bank's difficulty level is {bankDifficultyLevel}");
+                Console.WriteLine($"Bank's Difficulty Level: {bankDifficultyLevel}");
 
                 if (teamSkillLevel >= bankDifficultyLevel)
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
                     Console.WriteLine($"you did it");
                     Console.ResetColor();
+                    successfulTrials++;
                 }
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"straight to jail");
                     Console.ResetColor();
+                    failedTrials++;
                 }
             }
 
-            // foreach (Member member in Team)
-            // {
-            // Console.WriteLine($"{member.Name} has a skill level of {member.SkillLevel} and a courage factor of {member.CourageFactor}.");
-            // }
+            Console.WriteLine();
+            Console.WriteLine($"Number of successful runs: {successfulTrials}");
+            Console.WriteLine($"Number of failed runs: {failedTrials}");
         }
     }
 }
